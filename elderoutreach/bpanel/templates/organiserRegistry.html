@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta property="og:title" content="Event Organiser Registration">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=1">
+<meta name="HandheldFriendly" content="true">
+<title>Event Organiser Registration</title>
+<style type="text/css">@media print{.form-section{display:inline!important}.form-pagebreak{display:none!important}.form-section-closed{height:auto!important}.page-section{position:initial!important}}</style>
+{% load static %}
+<link type="text/css" rel="stylesheet" href="{% static 'organiserRegistry_files/5e6b428acc8c4e222d1beb91.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'organiserRegistry_files/payment_styles.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'organiserRegistry_files/payment_feature.css' %}">
+<style type="text/css" id="form-designer-style">
+    /* Injected CSS Code */
+.form-label.form-label-auto {
+        
+        display: inline-block;
+        float: left;
+        text-align: left;
+      
+      }
+    /* Injected CSS Code */
+</style>
+</head>
+<body>
+<form action="/bpanel/organiser-registration/" method="post" name="form_222681035398056" id="222681035398056" accept-charset="utf-8" autocomplete="on" novalidate="true">
+  <input type="hidden" name="formID" value="222681035398056">
+  <input type="hidden" id="JWTContainer" value="">
+  <input type="hidden" id="cardinalOrderNumber" value="">
+  <div role="main" class="form-all">
+    <div class="formLogoWrapper Center">
+      <img loading="lazy" class="formLogoImg" src="{% static 'organiserRegistry_files/Wordmark.633149c38af4a8.03739759.png %'}" width="423" height="140">
+    </div>
+    <style>
+      .formLogoWrapper { display:inline-block; position: absolute; width: 100%;} .form-all:before { background: none !important;} .formLogoWrapper.Center { top: -150px; text-align: center;}
+    </style>
+    <ul class="form-section page-section">
+      <li id="cid_1" class="form-input-wide" data-type="control_head">
+        <div class="form-header-group  header-large">
+          <div class="header-text httal htvam">
+            <h1 id="header_1" class="form-header" data-component="header">
+              Event Organiser Registration
+            </h1>
+          </div>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_textbox" id="id_3">
+        <label class="form-label form-label-left form-label-auto" id="label_3" for="input_3"> Organiser Name </label>
+        <div id="cid_3" class="form-input" data-layout="half">
+          <input type="text" id="input_3" name="q3_organiserName" data-type="input-textbox" class="form-textbox" data-defaultvalue="" style="width:310px" size="310" data-component="textbox" aria-labelledby="label_3">
+        </div>
+      </li>
+      <li class="form-line" data-type="control_radio" id="id_4">
+        <label class="form-label form-label-left form-label-auto" id="label_4" for="input_4"> Organiser Type </label>
+        <div id="cid_4" class="form-input" data-layout="full">
+          <div class="form-single-column" role="group" aria-labelledby="label_4" data-component="radio">
+            <span class="form-radio-item" style="clear:left">
+              <span class="dragger-item">
+              </span>
+              <input type="radio" aria-describedby="label_4" class="form-radio" id="input_4_0" name="q4_organiserType" value="I">
+              <label id="label_input_4_0" for="input_4_0"> Individual </label>
+            </span>
+            <span class="form-radio-item" style="clear:left">
+              <span class="dragger-item">
+              </span>
+              <input type="radio" aria-describedby="label_4" class="form-radio" id="input_4_1" name="q4_organiserType" value="O">
+              <label id="label_input_4_1" for="input_4_1"> Organisation </label>
+            </span>
+          </div>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_email" id="id_6">
+        <label class="form-label form-label-left form-label-auto" id="label_6" for="input_6"> Email </label>
+        <div id="cid_6" class="form-input" data-layout="half">
+          <span class="form-sub-label-container" style="vertical-align:top">
+            <input type="email" id="input_6" name="q6_email" class="form-textbox validate[Email]" data-defaultvalue="" style="width:310px" size="310" data-component="email" aria-labelledby="label_6 sublabel_input_6">
+            <label class="form-sub-label" for="input_6" id="sublabel_input_6" style="min-height:13px" aria-hidden="false"> example@example.com </label>
+          </span>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_phone" id="id_7">
+        <label class="form-label form-label-left form-label-auto" id="label_7" for="input_7_full"> Phone Number </label>
+        <div id="cid_7" class="form-input" data-layout="half">
+          <span class="form-sub-label-container" style="vertical-align:top">
+            <input type="tel" id="input_7_full" name="q7_phoneNumber[full]" data-type="mask-number" class="mask-phone-number form-textbox validate[Fill Mask]" data-defaultvalue="" autocomplete="section-input_7 tel-national" style="width:310px" data-masked="true" placeholder="(000) 000-0000" data-component="phone" aria-labelledby="label_7 sublabel_7_masked" inputmode="text" maskvalue="(###) ###-####">
+            <label class="form-sub-label" for="input_7_full" id="sublabel_7_masked" style="min-height:13px" aria-hidden="false"> Please enter a valid phone number. </label>
+          </span>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_dropdown" id="id_8">
+        <label class="form-label form-label-left form-label-auto" id="label_8" for="input_8"> State/Territory </label>
+        <div id="cid_8" class="form-input" data-layout="half">
+          <select class="form-dropdown" id="input_8" name="q8_stateterritory" style="width:310px" data-component="dropdown">
+            <option value="" selected="selected"> Please Select </option>
+            <option value="ACT"> Australian Capital Territory </option>
+            <option value="JBT"> Jervis Bay Territory </option>
+            <option value="NSW"> New South Wales </option>
+            <option value="NT"> Northern Territory </option>
+            <option value="QLD"> Queensland </option>
+            <option value="SA"> South Australia </option>
+            <option value="TAS"> Tasmania </option>
+            <option value="VIC"> Victoria </option>
+            <option value="WA"> Western Australia </option>
+          </select>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_textbox" id="id_9">
+        <label class="form-label form-label-left form-label-auto" id="label_9" for="input_9"> Suburb </label>
+        <div id="cid_9" class="form-input" data-layout="half">
+          <input type="text" id="input_9" name="q9_suburb" data-type="input-textbox" class="form-textbox" data-defaultvalue="" style="width:310px" size="310" data-component="textbox" aria-labelledby="label_9">
+        </div>
+      </li>
+      <li class="form-line" data-type="control_button" id="id_2">
+        <div id="cid_2" class="form-input-wide" data-layout="full">
+          <div data-align="auto" class="form-buttons-wrapper form-buttons-auto   jsTest-button-wrapperField">
+          {% csrf_token %}
+            <button id="input_2" type="submit" class="form-submit-button submit-button jf-form-buttons jsTest-submitField" data-component="button" data-content="">
+              Submit
+            </button>
+          </div>
+        </div>
+      </li>
+      <li style="display:none">
+        Should be Empty:
+        <input type="text" name="website">
+      </li>
+    </ul>
+  </div>
+  <input type="hidden" class="simple_spc" id="simple_spc" name="simple_spc" value="222681035398056-222681035398056">
+<input type="hidden" name="event_id" value="1664174815490_222681035398056_IGUqyol"></form><img id="event_tracking_image" src="organiserRegistry_files/index" alt="jftr" style="display: none;" width="1" height="1">
+</body></html>

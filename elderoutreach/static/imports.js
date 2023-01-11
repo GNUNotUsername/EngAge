@@ -1,0 +1,10 @@
+import { StatusBar } from 'react';
+import { ActivityIndicator, Button, StyleSheet, Text, TextInput, View, SafeAreaView } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useFonts } from 'expo-font';
+import { Prompt_400Regular } from '@expo-google-fonts/prompt';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import {NavigationContainer} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+//import { TextInput } from 'react-native-web';
+import React from 'react';
