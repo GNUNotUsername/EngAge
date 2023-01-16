@@ -66,7 +66,6 @@ def flat_cut(raw, delims):
 	return existing
 
 class APIPushInterests(APIView):
-    """TODO HOFF DOCUMENT ME"""
     permission_classes = (IsAuthenticated,)
     def post(self, request):
         if str(request.auth) != ADMIN_AUTH:
@@ -108,7 +107,7 @@ class APIPushNewEvent(APIView):
 		bad_geography	- suburb not within state
 	"""
 
-	#permission_classes = (IsAuthenticated,)
+	permission_classes = (IsAuthenticated,)
 	def post(self, request):
 		user = request.user
 		try:
@@ -158,7 +157,6 @@ class APIPushNewEvent(APIView):
 		return Response({"success": [new_event.event_id, new_event.name] + good_keys})
 
 class APIPushConfirmContact(APIView):
-	"""TODO HOFF DOCUMENT ME"""
 	permission_classes = (IsAuthenticated,)
 	def post(self, request):
 		user = request.user
@@ -205,20 +203,18 @@ class APIPushConfirmContact(APIView):
 		return REQ_SUCCESS
 
 class APIPushUpcomingReminders(APIView):
-	#permission_classes = (IsAuthenticated,)
+	permission_classes = (IsAuthenticated,)
 	def post(self, request):
 		try:
 			username = request.POST.get("username")
 			user = User.objects.filter(username = username)[0]
 		except:
 			user = request.user
-			#return Response({"not_found": username})
 		attending = Attending.objects.filter(attending_user = user)
 		today = datetime.today().astimezone()
 		pings = 0
 		for att in attending:
 			event = att.attending_event
-			#return Response({str(event.start_time)})
 			days_rem = (event.start_time.astimezone() - today).days
 			if days_rem < WEEK:
 				# First check that there isn't an existing reminder
@@ -243,7 +239,6 @@ class APIPushUpcomingReminders(APIView):
 		return out
 
 class APIPushPendingContact(APIView):
-	"""TODO HOFF DOCUMENT ME"""
 	permission_classes = (IsAuthenticated,)
 	def post(self, request):
 		user = request.user
@@ -361,7 +356,7 @@ class APIPushNewEventProvider(APIView):
 		save_error		- could not save event provider to database
 	"""
 
-	#permission_classes = (IsAuthenticated,)
+	permission_classes = (IsAuthenticated,)
 	def post(self, request):
 		try:
 			content		= request.POST
@@ -388,7 +383,7 @@ class APIPushNewEventProvider(APIView):
 class KILL_EVERYTHING(APIView):
 	"""PROHOBITED GO AWAY"""
 	def get(self, request):
-		#return Response({"GO AWAY"})
+		return Response({"GO AWAY"})
 		jedi_temple = [
 			#TransportCoverage,
 			#TransportProviders,
@@ -414,7 +409,6 @@ class KILL_EVERYTHING(APIView):
 		return Response({"I saw Djanakin... dropping rows..."})
 
 class APIPushNewCatersOption(APIView):
-	"""TODO HOFF DOCUMENT ME"""
 	permission_classes = (IsAuthenticated,)
 	def post(self, request):
 		try:
@@ -427,7 +421,6 @@ class APIPushNewCatersOption(APIView):
 		return REQ_SUCCESS
 
 class APIPushNewProviderCaters(APIView):
-    """TODO HOFF DOCUMENT ME"""
     permission_classes = (IsAuthenticated,)
     def post(self, request):
         try:
@@ -454,7 +447,7 @@ class APIPushNewCheckin(APIView):
 		bad-emote		- emoji score out of range
 		fails			- names of db entries which could not save (woop, emote, checkin)
 	"""
-	#permission_classes = (IsAuthenticated,)
+	permission_classes = (IsAuthenticated,)
 	def post(self, request):
 		try:
 			content		= request.POST
@@ -476,10 +469,7 @@ class APIPushNewCheckin(APIView):
 		new_emote = EmoteScoreIndividual(UID = user, rsp = emote)
 		new_checkin = LastCheckins(user = user)
 		content = {"fails": []}
-		#try:
 		new_woop.save()
-		#except:
-		#	content["fails"].append({"woop": woop})
 		try:
 			new_emote.save()
 		except:
@@ -493,7 +483,6 @@ class APIPushNewCheckin(APIView):
 		return REQ_SUCCESS
 
 class APIPushNewMessage(APIView):
-    """TODO HOFF DOCUMENT ME"""
     permission_classes = (IsAuthenticated,)
     def post(self, request):
         user = request.user
@@ -512,6 +501,7 @@ class APIPushNewMessage(APIView):
 class APIPushDummyData(APIView):
 	"""TESTING DO NOT USE FOR REAL"""
 	def post(self, request):
+		return Response({"GO AWAY"})
 		try:
 			uname = request.POST.get("username")
 			user = User.objects.filter(username = uname)[0]
@@ -638,7 +628,7 @@ class APIPushCheckinPings(APIView):
 		save_error		- couldn't send user reminder to check in.
 	"""
 
-	#permission_classes = (IsAuthenticated,)
+	permission_classes = (IsAuthenticated,)
 	def post(self, request):
 		try:
 			target_name	= request.POST.get("username")
@@ -677,42 +667,6 @@ class APIPushCheckinPings(APIView):
 					pass
 		return REQ_SUCCESS
 
-class APIPushAnyNotification(APIView):
-	"""TODO DELETE ME LATER"""
-	#permission_classes = (IsAuthenticated,)
-	def post(self, request):
-		try:
-			content	= request.POST
-			target	= User.objects.filter(username = content.get("target"))[0]
-		except:
-			return Response({"bad user"})
-		try:
-			n_type	= content.get("type")
-			text	= content.get("content")
-		except:
-			return Response({"bad content"})
-		try:
-			new		= Notifications(recipient = target, notif_type = n_type, content = text, timestamp = datetime.now())
-			new.save()
-		except:
-			return ERROR_INVALID
-		return REQ_SUCCESS
-
-class APIFakeFriends(APIView):
-	"""TODO DELETE ME LATER"""
-	#permission_classes = (IsAuthenticated,)
-	def post(self, request):
-		try:
-			u1 = User.objects.filter(username = request.POST.get("t1"))[0]
-			u2 = User.objects.filter(username = request.POST.get("t2"))[0]
-			clarence = Contact(contact_user_1 = u1, contact_user_2 = u2)
-			clarence.save()
-			clazzo = Contact(contact_user_1 = u2, contact_user_2 = u1)
-			clazzo.save()
-		except:
-			return Response({"NO"})
-		return Response({"clazzo mate how u goin"})
-
 class APISetUserInterests(APIView):
 	"""Add or remove a user's interest
 
@@ -728,7 +682,7 @@ class APISetUserInterests(APIView):
 		all_fails		- every interest failed to update
 	"""
 
-	#permission_classes = (IsAuthenticated,)
+	permission_classes = (IsAuthenticated,)
 	def post(self, request):
 		try:
 			username	= request.POST.get("username")
@@ -791,23 +745,6 @@ class APISetUserInterests(APIView):
 			return Response({"all_fails"})
 		return Response({"success": worked, "fails": fails})
 
-class APIAddSSID(APIView):
-	"""TODO DELETE THIS LATER"""
-	#permission_classes = (IsAuthenticated,)
-	def post(self, request):
-		#return GO_AWAY
-		p		= request.POST
-		state	= p.get("state")
-		suburb	= p.get("suburb")
-		latit	= p.get("latit")
-		longit	= p.get("longit")
-		new		= StateSuburbs(state = state, suburb = suburb, latit = latit, longit = longit)
-		try:
-			new.save()
-		except:
-			return Response({"FAIL"})
-		return REQ_SUCCESS
-
 class APISendRecommendations(APIView):
 	"""Generate new event recommendations notifications for a user.
 	Don't rerun this successively or duplicate notifications will stack up.
@@ -825,7 +762,7 @@ class APISendRecommendations(APIView):
 		error_missingui	- user interests aren't registered	- investigate NOW
 	"""
 
-	#permission_classes = (IsAuthenticated,)
+	permission_classes = (IsAuthenticated,)
 	def post(self, request):
 		try:
 			username = request.POST.get("username")
@@ -883,29 +820,16 @@ class APISendRecommendations(APIView):
 
 
 def ss_distance(ss1, ss2):
-	"""Find Haversine distance between two suburbs.
-	Could just use Euclid and ignore the
-	tiny amount of curvature involved at this scale
-	but this looks cooler.
+	"""Find Euclidean distance between two suburbs.
 
 	ss1		- SSID entry of first suburb
 	ss2		- SSID entry of second suburb
 
-	return	- <float> Haversine distance between the suburbs
+	return	- <float> Euclidean distance between the suburbs
 	"""
 
 	lat_1, lat_2	= ss1.latit, ss2.latit
 	d_lats			= abs(lat_1 - lat_2)
 	d_longs			= abs(ss1.longit - ss2.longit)
 
-	# Formula from https://www.omnicalculator.com/other/latitude-longitude-distance
-	"""
-	haversine		= 2 * EARTH_RADIUS * asin(sqrt(
-						((sin(d_lats) ** 2) / 2) +
-						(cos(lat_1) * cos(lat_2) *
-						((sin(d_longs) ** 2) / 2))))
-	lol that didn't work
-	"""
-
 	return ((d_lats ** 2) + (d_longs ** 2)) ** 0.5
-	#return haversine

@@ -1,11 +1,7 @@
 # rest api stuff
 
 from rest_framework import serializers
-
 from account.models import Contact, Message, UserInterests, Interests
-
-#TODO Figure out how to properly handle ForeignKey with rest... current code is just guessing.
-# or not????
 
 class ContactSerializer(serializers.Serializer):
 

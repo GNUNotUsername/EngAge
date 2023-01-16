@@ -27,10 +27,8 @@ from modules.constants				import EARTH_RADIUS
 ERROR_INVALID	= Response({"error": "invalid_request"})
 ERROR_NOTFOUND	= Response({"error": "not_found"})
 
-# TODO HOFF DOCUMENT THESE
-
 class APIFetchInterests(APIView):
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         content = {}
         for interest in Interests.objects.all():
@@ -86,7 +84,7 @@ class APIFetchAttendStatus(APIView):
 		not_found		- event does not exist
 	"""
 
-	#permission_classes = (IsAuthenticated,)
+	permission_classes = (IsAuthenticated,)
 	def get(self, request):
 		try:
 			uname = request.GET.get("username")
@@ -118,7 +116,7 @@ class APIFetchAttendingEvents(APIView):
         return Response(content)
 
 class APIFetchAvailableEvents(APIView):
-	#permission_classes = (IsAuthenticated,)
+	permission_classes = (IsAuthenticated,)
 	def get(self, request):
 		#user = request.user
 		#try:
@@ -189,29 +187,6 @@ class APIFetchProviderCaters(APIView):
         for cater_provides in ProviderCaters.objects.filter(cater_provider=cater_provider_obj):
             content[id_counter] = cater_provides.cater_caters
         return content
-
-class APIFetchTransportCoverage(APIView):
-	# TODO DELETE ME
-	#permission_classes = (IsAuthenticated,)
-	def get(self, request):
-		#id_counter = 0
-		#try:
-		#    tid = int(request.GET.get("tid"))
-		#except:
-		#    return ERROR_INVALID
-		transport_coverage = list(TransportCoverage.objects.all())
-		if len(transport_coverage) == 0:
-			return Response({"all ur providers are hecked"})
-		content = {p.TID.TID: [] for p in transport_coverage}
-		for p in transport_coverage:
-			tid = p.TID.TID
-			if tid in content:
-				content[tid].append((p.area.SSID, p.area.state, p.area.suburb))
-			else:
-				content[tid] = [(p.area.SSID, p.area.state, p.area.suburb)]
-		for tid in content:
-			content[tid].sort()
-		return Response(content)
 
 class APIFetchSentPendingContacts(APIView):
     permission_classes = (IsAuthenticated,)
@@ -291,12 +266,6 @@ class APIFetchUserMessageHistory(APIView):
             msg_index += 1
         return Response(content)
 
-class APIFetchUsers(APIView):
-	"""TODO DELETE ME"""
-	def get(self, request):
-		optus = [u.username for u in User.objects.all()]
-		return Response(optus)
-
 class APIFetchNotifications(APIView):
 	"""Pull notifications for a user.
 
@@ -332,15 +301,6 @@ class APIFetchNotifications(APIView):
 		content.reverse()
 		return Response(content)
 
-class APIViewAllSSIDs(APIView):
-	"""TODO DELETE THIS LATER"""
-	#permission_classes = (IsAuthenticated,)
-	def get(self, request):
-		out = StateSuburbs.objects.all()
-		ssids = [(ss.SSID, ss.state, ss.suburb) for ss in out]
-		#results = dict(zip(ssids, out))
-		return Response([len(ssids)] + ssids)
-
 class APIFetchEventInfo(APIView):
 	"""Fetch info of event with given ID.
 
@@ -357,7 +317,7 @@ class APIFetchEventInfo(APIView):
 		not_found		- event ID does not exist.
 	"""
 
-	#permission_classes = (IsAuthenticated,)
+	permission_classes = (IsAuthenticated,)
 	def get(self, request):
 		try:
 			event_id = request.GET.get("event_id")
@@ -367,7 +327,7 @@ class APIFetchEventInfo(APIView):
 			event_info = Events.objects.filter(event_id=event_id)[0]
 		except:
 			return ERROR_NOTFOUND
-		#return Response({event_id: [event_info.name, event_info.address, event_info.start_time, event_info.end_time, event_info.description]})
+
 		return Response([event_id, event_info.name, event_info.address, event_info.start_time, event_info.description])
 
 class APIFetchTransportReccomendations(APIView):
@@ -385,7 +345,7 @@ class APIFetchTransportReccomendations(APIView):
 		provider booking phone number
 	"""
 
-	#permission_classes = (IsAuthenticated,)
+	permission_classes = (IsAuthenticated,)
 	def get(self, request):
 		try:
 			username = request.GET.get("username")
@@ -425,26 +385,16 @@ def ss_distance(ss1, ss2):
 	Should use haversine distance but this is easier and Earth's curvature
 	won't cause any significant differences at this scale
 	(unless people are travelling across the entire country)
-	but no one's gonna do that
+	but no pensioners are going to do that
 
 	ss1		- SSID entry of first suburb
 	ss2		- SSID entry of second suburb
 
-	return	- <float> Haversine distance between the suburbs
+	return	- <float> Euclidean distance between the suburbs
 	"""
 
 	lat_1, lat_2	= ss1.latit, ss2.latit
 	d_lats			= abs(lat_1 - lat_2)
 	d_longs			= abs(ss1.longit - ss2.longit)
 
-	"""
-	# Formula from https://www.omnicalculator.com/other/latitude-longitude-distance
-	haversine		= 2 * EARTH_RADIUS * asin(sqrt(
-						((sin(d_lats) ** 2) / 2) +
-						(cos(lat_1) * cos(lat_2) *
-						((sin(d_longs) ** 2) / 2))))
-	lol that didn't work
-	"""
-
 	return ((d_lats ** 2) + (d_longs ** 2)) ** 0.5
-	#return haversine

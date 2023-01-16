@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-mkm*$xw8#241j1b+_e!kupb-ux%7z968@i-*p-cg(=30%^ccwl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["matthewhoffman.biz"]
+ALLOWED_HOSTS = ["REDACTED"]
 
 STATIC_URL = '/static/'
 
@@ -118,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CSRF_TRUSTED_ORIGINS = ["https://*.matthewhoffman.biz"]
+CSRF_TRUSTED_ORIGINS = ["REDACTED"]
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 

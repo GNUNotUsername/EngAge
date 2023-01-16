@@ -42,9 +42,6 @@ class WoopScoreIndividual(models.Model):
 			raise Exception(f"WOOP score must be in [6, 30] range, got {self.rsp}")
 		super(WoopScoreIndividual, self).save(*args, **kwargs)
 
-# These three tables might be able to be polymorphised
-# using some high level hoodoo voodoo black magic
-# but this is not a good use of our time so they stay.
 class WoopScoreState(models.Model):
 	"""Average WOOP score in the past month per state"""
 	area	= models.CharField(choices = STATES, max_length = 3)
